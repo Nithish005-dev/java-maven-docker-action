@@ -1,0 +1,27 @@
+name: Java Maven Docker CI with Custom Action
+ 
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+ 
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - uses: actions/checkout@v4
+ 
+      # Optional: Build Maven project (skip if no code yet)
+      - name: Build Java Maven App
+        run: mvn clean package -DskipTests
+ 
+      # Run custom Docker action
+      - name: Build and Push Docker Image
+        uses: ./.github/actions/my-docker-action
+        with:
+          image-name: nithish005/java-maven-app
+          tag: 1.0
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
