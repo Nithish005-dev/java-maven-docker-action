@@ -1,0 +1,16 @@
+name: "My Docker Build & Push Action"
+description: "Builds a Docker image and pushes it to Docker Hub"
+author: "Nithish"
+inputs:
+  image-name:
+    description: "Name of the Docker image"
+    required: true
+  tag:
+    description: "Tag for the Docker image"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.image-name }}
+    - ${{ inputs.tag }}
